@@ -1,6 +1,8 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.PageObjects;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +26,7 @@ namespace LiverpoolMuseumTesting
         {
             driver.Url = "http://www.liverpoolmuseums.org.uk/";
 
-            driver.Manage().Timeouts().ImplicitWait = new TimeSpan(0, 0, 30);
+            driver.Manage().Timeouts().ImplicitWait = new TimeSpan(0, 0, 60);
 
             int totalSlides = driver.FindElements(By.ClassName("owl-page")).Count();
 
@@ -66,14 +68,62 @@ namespace LiverpoolMuseumTesting
             }
         }
 
-        //[Test]
-        //public void TestFindUs() {
-        //    driver.Url = "http://www.liverpoolmuseums.org.uk/";
+        [Test]
+        public void TestFindUs()
+        {
+            driver.Url = "http://www.liverpoolmuseums.org.uk/";
 
-        //    driver.Manage().Timeouts().ImplicitWait = new TimeSpan(0, 0, 30);
+            driver.Manage().Timeouts().ImplicitWait = new TimeSpan(0, 0, 60);
 
+            string[] socials = { "Twitter", "YouTube" };
 
-        //}
+            var buttons = GetWebElementsList(socials);
+
+            Assert.AreEqual(socials.Length, buttons.Count);
+          
+            for (int i = 0; i < buttons.Count; i++)
+            {
+                for (int j = i + 1; j < buttons.Count; j++)
+                {
+                    Assert.AreNotEqual(buttons[i].GetAttribute("alt"), 
+                        buttons[j].GetAttribute("alt"));
+                }        
+            }
+
+            foreach (var i in buttons)
+            {
+                try
+                {
+                    i.Click();     
+                }
+                catch 
+                {
+                }                                      
+                driver.Navigate().Back();
+            }          
+        }
+
+        private List<IWebElement> GetWebElementsList(string[] findList, string tagName = "img", 
+            string attribute = "alt")
+        {
+            var elements = driver.FindElements(By.TagName(tagName));
+
+            return elements.Where(item => {
+                try
+                {
+                    for (int i = 0; i < findList.Length; i++)
+                    {
+                        if (findList [i] == item.GetAttribute(attribute))
+                        {
+                            return true;
+                        }
+                    }             
+                }
+                catch { }
+
+                return false;
+            }).ToList();
+        }
 
 
         [TearDown]
