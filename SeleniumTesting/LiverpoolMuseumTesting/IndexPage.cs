@@ -45,12 +45,35 @@ namespace LiverpoolMuseumTesting
                 nextButton.Click();
             }
 
+            string[] activePageClass = { "owl-page active", "active owl-page" };
+
+            int activePosition = 0;
             for (int i = 0; i < totalSlides; i++)
             {
-                Assert.AreEqual(slidesClasses[0][i], slidesClasses[totalSlides][i]);
+                if (slidesClasses[0][i] == activePageClass[0] || slidesClasses[0][i] == activePageClass[1])
+                {
+                    activePosition = i;
+                    break;
+                }
             }
 
+            for (int i = 1; i < totalSlides + 1; i++)
+            {
+                activePosition = (activePosition + 1) % (totalSlides);
+                bool result = (slidesClasses[i][activePosition] == activePageClass[0]) || 
+                    (slidesClasses[i][activePosition] == activePageClass[1]);
+                Assert.AreEqual(true, result);
+            }
         }
+
+        //[Test]
+        //public void TestFindUs() {
+        //    driver.Url = "http://www.liverpoolmuseums.org.uk/";
+
+        //    driver.Manage().Timeouts().ImplicitWait = new TimeSpan(0, 0, 30);
+
+
+        //}
 
 
         [TearDown]
