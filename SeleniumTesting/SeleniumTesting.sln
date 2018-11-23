@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28010.2050
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeleniumTesting", "SeleniumTesting\SeleniumTesting.csproj", "{743EA133-EEB6-461F-9717-492D7E39BBE1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiverpoolMuseumsTest", "LiverpoolMuseumsTest\LiverpoolMuseumsTest.csproj", "{FEAE23CF-ADA6-4F83-BE7A-A8087DFC74D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{743EA133-EEB6-461F-9717-492D7E39BBE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{743EA133-EEB6-461F-9717-492D7E39BBE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{743EA133-EEB6-461F-9717-492D7E39BBE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEAE23CF-ADA6-4F83-BE7A-A8087DFC74D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEAE23CF-ADA6-4F83-BE7A-A8087DFC74D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEAE23CF-ADA6-4F83-BE7A-A8087DFC74D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEAE23CF-ADA6-4F83-BE7A-A8087DFC74D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

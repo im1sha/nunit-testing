@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnlineStore
+namespace SeleniumTesting
 {
-    public class Class1
+    class EntryPoint
     {
+        static void Main(string[] args)
+        {
+        }
     }
 }
