@@ -55,6 +55,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IndexPage.cs" />
     <Compile Include="KidsSection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

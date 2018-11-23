@@ -57,26 +57,26 @@ namespace LiverpoolMuseumTesting
         }
 
         [Test]
-        public void CloseKidsSection()
+        public void CloseKidsSectionAdd()
         {
 
             driver.Url = "http://www.liverpoolmuseums.org.uk/";
          
-            IWebElement kidsSection = driver.FindElement(By.ClassName("kids-cta"));
+            IWebElement kidsAdd = driver.FindElement(By.ClassName("kids-cta"));
 
-            IWebElement element = driver.FindElement(By.ClassName("kids-cta-hide-button"));
-            element.Click();
+            IWebElement hideButton = driver.FindElement(By.ClassName("kids-cta-hide-button"));
+            hideButton.Click();
 
             try
             {
-                kidsSection = null;
-                kidsSection = driver.FindElement(By.ClassName("kids-cta is-shown"));
+                kidsAdd = null;
+                kidsAdd = driver.FindElement(By.ClassName("kids-cta is-shown"));
             }
             catch
             {
             }
 
-            Assert.AreEqual(kidsSection, null);
+            Assert.AreEqual(kidsAdd, null);
         }
 
         [Test]
@@ -149,49 +149,10 @@ namespace LiverpoolMuseumTesting
             Assert.AreEqual(true, CompareUrls(driver.Url, urlsToCompare));
         }
 
-        [Test]
-        public void CkeckSlider()
-        {
-            driver.Url = "http://www.liverpoolmuseums.org.uk/";
-
-            driver.Manage().Timeouts().ImplicitWait = new TimeSpan(0, 0, 15);
-
-            var totalSlides = driver.FindElements(By.ClassName("owl-page")).Count();
-
-            IWebElement nextButton = driver.FindElement(By.ClassName("owl-next"));
-
-            List<List<string>> collection = 
-                new List<List<string>>(totalSlides + 1);
-
-            for (int i = 0; i < totalSlides + 1; i++)
-            {
-                var items = driver.FindElements(By.ClassName("owl-page"));
-                Assert.AreEqual(totalSlides, items.Count);
-                collection.Add( new List<string>(totalSlides));
-                for (int j = 0; j < items.Count; j++ )
-                {
-                    collection[i].Add(items[j].GetAttribute("className"));
-                }
-                nextButton.Click();
-            }
-
-            for (int i = 0; i < totalSlides; i++)
-            {
-                Assert.AreEqual(collection[0][i], collection[totalSlides][i]);
-            }
-            
-            var x =collection;
-
-        }
-
-
-
         [TearDown]
         public void Close()
         {
-
             driver.Quit();
         }
-
     }
 }
