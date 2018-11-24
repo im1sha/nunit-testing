@@ -44,7 +44,6 @@ namespace LiverpoolMuseumTesting
             }
 
             Assert.AreEqual(elements.Count, 1);
-            Assert.AreNotEqual(elements, null);
         }
 
 
