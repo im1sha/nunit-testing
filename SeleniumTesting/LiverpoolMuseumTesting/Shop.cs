@@ -80,8 +80,32 @@ namespace LiverpoolMuseumTesting
             var clickableElement = wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(path)));
 
             Assert.AreEqual(clickableElement.Enabled, true);
-            Assert.AreEqual(buttonList.Count, 1);
+        }
 
+
+
+        [Test]
+        public void CookiesFailed()
+        {
+            driver.Url = "http://www.liverpoolmuseums.org.uk/onlineshop/cart.aspx?item=Floral+Liverbird+Coaster&id=2820&pr=4&wt=50&cat=gifts/for-the-home/floral-liverbird-coaster&isp=0&ins=0&md=15";
+
+            driver.Manage().Timeouts().ImplicitWait = new TimeSpan(0, 0, 10);
+
+            List<IWebElement> elements = null;
+            int length = 0;
+           
+            elements = driver.FindElements(By.TagName("input")).Where(i => i.GetAttribute("value").Length > 0 &&
+                i.GetAttribute("name") == "ctl00$ctl00$PageContent$cart$cartRptr$ctl01$quantityTB").ToList();
+            length = int.Parse(elements[0].GetAttribute("value"));
+
+            
+            driver.Navigate().Refresh();
+
+            var wait = new WebDriverWait(driver, TimeSpan.FromMinutes(1));
+            var clickableElement = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/form[@id='form1']/div[@class='wrapper home']/div[@class='wrapper-inner is-shop']/div[@class='content page']/div[@class='container-fluid']/div[@class='row-fluid']/div[@class='span9']/div[@class='panel']/div[@class='content-container']/div[@class='page-content']/div[@class='callout']/div[@class='form']/div[@id='cartContents']/table[@class='cartTable']/tbody/tr[@class='itemRow'][1]/td[@class='col2']/input[@id='quantityTB']")));
+            int lengthNew = int.Parse(clickableElement.GetAttribute("value"));
+
+            Assert.AreNotEqual(lengthNew, length);
         }
 
 
