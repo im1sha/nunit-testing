@@ -58,6 +58,7 @@
     <Compile Include="IndexPage.cs" />
     <Compile Include="KidsSection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SignUpForEmails.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
