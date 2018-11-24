@@ -11,6 +11,9 @@ using OpenQA.Selenium.Support.UI;
 
 namespace LiverpoolMuseumTesting
 {
+    /// <summary>
+    /// Tests kids content http://www.liverpoolmuseums.org.uk/kids/ and banners which redirect to it
+    /// </summary>
     public class KidsSection
     {
         private static IWebDriver driver;
@@ -21,6 +24,9 @@ namespace LiverpoolMuseumTesting
             driver = new ChromeDriver();
         }
 
+        /// <summary>
+        /// Tries close banner
+        /// </summary>
         [Test]
         public void CloseKidsSectionAdd()
         {
@@ -35,7 +41,7 @@ namespace LiverpoolMuseumTesting
             try
             {
                 kidsAdd = null;
-                kidsAdd = driver.FindElement(By.ClassName("kids-cta is-shown"));
+                kidsAdd = driver.FindElement(By.ClassName("kids-cta is-shown")); // try to find banner
             }
             catch
             {
@@ -44,6 +50,9 @@ namespace LiverpoolMuseumTesting
             Assert.AreEqual(kidsAdd, null);
         }
 
+        /// <summary>
+        /// Checks redirecting when user clicks add
+        /// </summary>
         [Test]
         public void GoToKidsPage()
         {
@@ -51,6 +60,7 @@ namespace LiverpoolMuseumTesting
 
             driver.Manage().Timeouts().ImplicitWait = new TimeSpan(0, 0, 30);
 
+            // banner's xpath
             string xpathOfKidsBlock = @"/html/body/form[@id='form1']/div[@class='wrapper home']/div[@class='wrapper-inner']/div[@class='kids-cta is-shown']/a";
             IWebElement kidsBlock = driver.FindElement(By.XPath(xpathOfKidsBlock));
             kidsBlock.Click();
@@ -59,6 +69,9 @@ namespace LiverpoolMuseumTesting
                 @"?utm_source=NMLwebsitehomepage&utm_medium=website&utm_campaign=kids");
         }
 
+        /// <summary>
+        /// Tests thems changing
+        /// </summary>
         [Test]
         public void ChangeTheme()
         {
@@ -72,7 +85,7 @@ namespace LiverpoolMuseumTesting
                 "persistBackgroundImage_egyptLink"
             };
 
-            string[][] rightUrls = new string[][] {
+            string[][] correctUrls = new string[][] {
                 new string[] {
                     @"http://www.liverpoolmuseums.org.uk/kids/?theme=space",
                     @"http://www.liverpoolmuseums.org.uk/kids/?&theme=space"
@@ -89,15 +102,20 @@ namespace LiverpoolMuseumTesting
 
             for (int i = 0; i < ids.Length; i++)
             {
-                CheckOneTheme(driver, ids[i], rightUrls[i]);
-            }
-                    
+                CheckOneTheme(driver, ids[i], correctUrls[i]);
+            }                   
         }
 
+        /// <summary>
+        /// Compares passed URLs
+        /// </summary>
+        /// <param name="url">URL to compare with</param>
+        /// <param name="urlsToCompare">Comparing URLs</param>
+        /// <returns>True if urlsToCompare contain url</returns>
         private bool CompareUrls(string url, string [] urlsToCompare)
         {
             bool result = false;
-            foreach (var u in urlsToCompare)
+            foreach (string u in urlsToCompare)
             {
                 if (u == url)
                 {
@@ -107,7 +125,13 @@ namespace LiverpoolMuseumTesting
             return result;
         }
 
-        private void CheckOneTheme(IWebDriver driver, string themeId,  string[] urlsToCompare)
+        /// <summary>
+        /// Checks if now correct theme is showing
+        /// </summary>
+        /// <param name="driver">Working driver</param>
+        /// <param name="themeId">Id item's to click</param>
+        /// <param name="urlsToCompare">Correct URLs</param>
+        private void CheckOneTheme(IWebDriver driver, string themeId, string[] urlsToCompare)
         {
             IWebElement theme = driver.FindElement(By.Id(themeId));
             theme.Click();

@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace LiverpoolMuseumTesting
 {
+    /// <summary>
+    /// Provides tests for site start page http://www.liverpoolmuseums.org.uk/
+    /// </summary>
     class IndexPage
     {
         private static IWebDriver driver;
@@ -21,6 +24,9 @@ namespace LiverpoolMuseumTesting
             driver = new ChromeDriver();
         }
 
+        /// <summary>
+        /// Checks if slider works correctly
+        /// </summary>
         [Test]
         public void CheckSlider()
         {
@@ -29,12 +35,12 @@ namespace LiverpoolMuseumTesting
             driver.Manage().Timeouts().ImplicitWait = new TimeSpan(0, 0, 60);
 
             int totalSlides = driver.FindElements(By.ClassName("owl-page")).Count();
-
             IWebElement nextButton = driver.FindElement(By.ClassName("owl-next"));
 
             List<List<string>> slidesClasses =
                 new List<List<string>>(totalSlides + 1);
 
+            // list slids using next button and add them classes to slidesClasses
             for (int i = 0; i < totalSlides + 1; i++)
             {
                 var items = driver.FindElements(By.ClassName("owl-page"));
@@ -50,6 +56,7 @@ namespace LiverpoolMuseumTesting
             string[] activePageClass = { "owl-page active", "active owl-page" };
 
             int activePosition = 0;
+            // detect active slide number at start
             for (int i = 0; i < totalSlides; i++)
             {
                 if (slidesClasses[0][i] == activePageClass[0] || slidesClasses[0][i] == activePageClass[1])
@@ -59,6 +66,7 @@ namespace LiverpoolMuseumTesting
                 }
             }
 
+            // check css-classes of slides to be in correct order
             for (int i = 1; i < totalSlides + 1; i++)
             {
                 activePosition = (activePosition + 1) % (totalSlides);
@@ -68,19 +76,21 @@ namespace LiverpoolMuseumTesting
             }
         }
 
+        /// <summary>
+        /// Determines if clicks to images of socials works in right way
+        /// </summary>
         [Test]
         public void TestFindUs()
         {
             driver.Url = "http://www.liverpoolmuseums.org.uk/";
-
             driver.Manage().Timeouts().ImplicitWait = new TimeSpan(0, 0, 60);
 
             string[] socials = { "Twitter", "YouTube" };
-
             var buttons = GetWebElementsList(socials);
 
-            Assert.AreEqual(socials.Length, buttons.Count);
+            Assert.AreEqual(socials.Length, buttons.Count); 
           
+            // check if buttons not the same
             for (int i = 0; i < buttons.Count; i++)
             {
                 for (int j = i + 1; j < buttons.Count; j++)
@@ -90,11 +100,12 @@ namespace LiverpoolMuseumTesting
                 }        
             }
 
-            foreach (var i in buttons)
+            // check if buttons work
+            foreach (var button in buttons)
             {
                 try
                 {
-                    i.Click();     
+                    button.Click();     
                 }
                 catch 
                 {
@@ -103,6 +114,13 @@ namespace LiverpoolMuseumTesting
             }          
         }
 
+        /// <summary>
+        /// Retrieves all web elements that have specified tag and attribute
+        /// </summary>
+        /// <param name="findList">Array where to find</param>
+        /// <param name="tagName">tag string representation</param>
+        /// <param name="attribute">attribute string representation</param>
+        /// <returns>List of web elements which satisfy passed conditions</returns>
         private List<IWebElement> GetWebElementsList(string[] findList, string tagName = "img", 
             string attribute = "alt")
         {
